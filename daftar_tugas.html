@@ -1,0 +1,1207 @@
+<!DOCTYPE html>
+<html lang="id">
+
+<head>
+
+    <meta charset="UTF-8">
+
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>Daftar Tugas | Student Task Manager</title>
+
+    <!-- Bootstrap -->
+
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
+
+    <!-- Font Awesome -->
+
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.6.0/css/all.min.css">
+
+    <!-- Google Font -->
+
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap"
+        rel="stylesheet">
+
+    <style>
+        * {
+
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Poppins', sans-serif;
+
+        }
+
+        body {
+
+            background: #f5f7fb;
+
+        }
+
+        /* =======================
+SIDEBAR
+======================= */
+
+        .sidebar {
+
+            position: fixed;
+            left: 0;
+            top: 0;
+            width: 250px;
+            height: 100vh;
+            background: #4F46E5;
+            color: white;
+            box-shadow: 5px 0 20px rgba(0, 0, 0, .15);
+            z-index: 1000;
+
+        }
+
+        .logo {
+
+            padding: 25px;
+            text-align: center;
+            font-size: 24px;
+            font-weight: 700;
+            border-bottom: 1px solid rgba(255, 255, 255, .2);
+
+        }
+
+        .logo i {
+
+            margin-right: 10px;
+
+        }
+
+        .sidebar ul {
+
+            list-style: none;
+            padding: 20px 0;
+
+        }
+
+        .sidebar ul li {
+
+            margin: 8px 15px;
+
+        }
+
+        .sidebar ul li a {
+
+            display: block;
+            padding: 14px 18px;
+            color: white;
+            text-decoration: none;
+            border-radius: 12px;
+            transition: .3s;
+
+        }
+
+        .sidebar ul li a:hover {
+
+            background: white;
+            color: #4F46E5;
+
+        }
+
+        .sidebar ul li a i {
+
+            width: 28px;
+
+        }
+
+        /* =======================
+CONTENT
+======================= */
+
+        .content {
+
+            margin-left: 250px;
+            min-height: 100vh;
+
+        }
+
+        /* =======================
+TOPBAR
+======================= */
+
+        .topbar {
+
+            background: white;
+            padding: 18px 30px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, .08);
+
+        }
+
+        .topbar h4 {
+
+            margin: 0;
+            font-weight: 600;
+
+        }
+
+        .user-box {
+
+            display: flex;
+            align-items: center;
+            gap: 15px;
+
+        }
+
+        .user-box img {
+
+            width: 45px;
+            height: 45px;
+            border-radius: 50%;
+
+        }
+
+        .user-name {
+
+            font-weight: 600;
+
+        }
+
+        /* =======================
+HEADER
+======================= */
+
+        .page-header {
+
+            padding: 35px;
+
+        }
+
+        .page-header h2 {
+
+            font-weight: 700;
+            color: #333;
+
+        }
+
+        .page-header p {
+
+            color: #666;
+
+        }
+
+        /* =======================
+CARD
+======================= */
+
+        .card-custom {
+
+            border: none;
+            border-radius: 18px;
+            box-shadow: 0 10px 25px rgba(0, 0, 0, .08);
+
+        }
+
+        .icon-box {
+
+            width: 60px;
+            height: 60px;
+            border-radius: 15px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            font-size: 25px;
+            color: white;
+
+        }
+
+        .bg1 {
+            background: #4F46E5;
+        }
+
+        .bg2 {
+            background: #16a34a;
+        }
+
+        .bg3 {
+            background: #f59e0b;
+        }
+
+        .bg4 {
+            background: #dc2626;
+        }
+
+        /* =======================
+TABLE
+======================= */
+
+        .table {
+
+            vertical-align: middle;
+
+        }
+
+        .table thead {
+
+            background: #4F46E5;
+            color: white;
+
+        }
+
+        .badge {
+
+            padding: 8px 12px;
+            font-size: 13px;
+
+        }
+
+        .btn-action {
+
+            width: 38px;
+            height: 38px;
+            padding: 0;
+
+        }
+
+        /* =======================
+RESPONSIVE
+======================= */
+
+        @media(max-width:992px) {
+
+            .sidebar {
+
+                width: 90px;
+
+            }
+
+            .logo span {
+
+                display: none;
+
+            }
+
+            .sidebar ul li a span {
+
+                display: none;
+
+            }
+
+            .content {
+
+                margin-left: 90px;
+
+            }
+
+        }
+
+        @media(max-width:768px) {
+
+            .sidebar {
+
+                display: none;
+
+            }
+
+            .content {
+
+                margin-left: 0;
+
+            }
+
+        }
+    </style>
+
+</head>
+
+<body>
+    <!-- ==========================
+        SIDEBAR
+========================== -->
+
+    <div class="sidebar">
+
+        <div class="logo">
+
+            <i class="fa-solid fa-book-open"></i>
+
+            <span>STM</span>
+
+        </div>
+
+        <ul>
+
+            <li>
+
+                <a href="dashboard.html">
+
+                    <i class="fa-solid fa-house"></i>
+
+                    <span>Dashboard</span>
+
+                </a>
+
+            </li>
+
+            <li>
+
+                <a href="tambah_tugas.html">
+
+                    <i class="fa-solid fa-plus"></i>
+
+                    <span>Tambah Tugas</span>
+
+                </a>
+
+            </li>
+
+            <li>
+
+                <a href="daftar_tugas.html">
+
+                    <i class="fa-solid fa-list-check"></i>
+
+                    <span>Daftar Tugas</span>
+
+                </a>
+
+            </li>
+
+            <li>
+
+                <a href="profil.html">
+
+                    <i class="fa-solid fa-user"></i>
+
+                    <span>Profil</span>
+
+                </a>
+
+            </li>
+
+            <li>
+
+                <a href="#" id="logoutBtn">
+
+                    <i class="fa-solid fa-right-from-bracket"></i>
+
+                    <span>Logout</span>
+
+                </a>
+
+            </li>
+
+        </ul>
+
+    </div>
+
+    <!-- ==========================
+        CONTENT
+========================== -->
+
+    <div class="content">
+
+        <!-- NAVBAR -->
+
+        <div class="topbar">
+
+            <h4>
+
+                Student Task Manager
+
+            </h4>
+
+            <div class="user-box">
+
+                <img src="https://ui-avatars.com/api/?name=User&background=4F46E5&color=ffffff" alt="Avatar">
+
+                <div>
+
+                    <div class="user-name" id="namaUser">
+
+                        Loading...
+
+                    </div>
+
+                    <small id="tanggalHari">
+
+                        Loading...
+
+                    </small>
+
+                </div>
+
+            </div>
+
+        </div>
+
+        <!-- PAGE HEADER -->
+
+        <div class="page-header">
+
+            <h2>
+
+                <i class="fa-solid fa-list-check text-primary"></i>
+
+                Daftar Tugas
+
+            </h2>
+
+            <p>
+
+                Kelola seluruh tugas kuliah Anda dengan mudah.
+
+            </p>
+
+        </div>
+
+        <!-- CONTAINER -->
+
+        <div class="container-fluid px-4">
+
+            <!-- Statistik -->
+
+            <div class="row g-4 mb-4">
+
+                <div class="col-lg-3 col-md-6">
+
+                    <div class="card card-custom">
+
+                        <div class="card-body d-flex justify-content-between align-items-center">
+
+                            <div>
+
+                                <small class="text-muted">
+
+                                    Total Tugas
+
+                                </small>
+
+                                <h2 id="totalTask">0</h2>
+
+                            </div>
+
+                            <div class="icon-box bg1">
+
+                                <i class="fa-solid fa-book"></i>
+
+                            </div>
+
+                        </div>
+
+                    </div>
+
+                </div>
+
+                <div class="col-lg-3 col-md-6">
+
+                    <div class="card card-custom">
+
+                        <div class="card-body d-flex justify-content-between align-items-center">
+
+                            <div>
+
+                                <small class="text-muted">
+
+                                    Selesai
+
+                                </small>
+
+                                <h2 id="doneTask">0</h2>
+
+                            </div>
+
+                            <div class="icon-box bg2">
+
+                                <i class="fa-solid fa-circle-check"></i>
+
+                            </div>
+
+                        </div>
+
+                    </div>
+
+                </div>
+
+                <div class="col-lg-3 col-md-6">
+
+                    <div class="card card-custom">
+
+                        <div class="card-body d-flex justify-content-between align-items-center">
+
+                            <div>
+
+                                <small class="text-muted">
+
+                                    Belum
+
+                                </small>
+
+                                <h2 id="pendingTask">0</h2>
+
+                            </div>
+
+                            <div class="icon-box bg3">
+
+                                <i class="fa-solid fa-clock"></i>
+
+                            </div>
+
+                        </div>
+
+                    </div>
+
+                </div>
+
+                <div class="col-lg-3 col-md-6">
+
+                    <div class="card card-custom">
+
+                        <div class="card-body d-flex justify-content-between align-items-center">
+
+                            <div>
+
+                                <small class="text-muted">
+
+                                    Terlambat
+
+                                </small>
+
+                                <h2 id="lateTask">0</h2>
+
+                            </div>
+
+                            <div class="icon-box bg4">
+
+                                <i class="fa-solid fa-triangle-exclamation"></i>
+
+                            </div>
+
+                        </div>
+
+                    </div>
+
+                </div>
+
+            </div>
+            <!-- ==========================
+        SEARCH & FILTER
+========================== -->
+
+            <div class="card card-custom mb-4">
+
+                <div class="card-body">
+
+                    <div class="row">
+
+                        <div class="col-md-8 mb-3">
+
+                            <label class="form-label">
+
+                                <i class="fa-solid fa-magnifying-glass"></i>
+
+                                Cari Tugas
+
+                            </label>
+
+                            <input type="text" id="searchTask" class="form-control"
+                                placeholder="Cari berdasarkan judul atau mata kuliah...">
+
+                        </div>
+
+                        <div class="col-md-4 mb-3">
+
+                            <label class="form-label">
+
+                                <i class="fa-solid fa-filter"></i>
+
+                                Filter Status
+
+                            </label>
+
+                            <select id="filterStatus" class="form-select">
+
+                                <option value="Semua">Semua</option>
+
+                                <option value="Belum Selesai">Belum Selesai</option>
+
+                                <option value="Selesai">Selesai</option>
+
+                                <option value="Terlambat">Terlambat</option>
+
+                            </select>
+
+                        </div>
+
+                    </div>
+
+                </div>
+
+            </div>
+
+            <!-- ==========================
+        TABEL TUGAS
+========================== -->
+
+            <div class="card card-custom">
+
+                <div class="card-header d-flex justify-content-between align-items-center">
+
+                    <h5 class="mb-0">
+
+                        <i class="fa-solid fa-table"></i>
+
+                        Daftar Tugas
+
+                    </h5>
+
+                    <a href="tambah_tugas.html" class="btn btn-primary">
+
+                        <i class="fa-solid fa-plus"></i>
+
+                        Tambah
+
+                    </a>
+
+                </div>
+
+                <div class="card-body">
+
+                    <div class="table-responsive">
+
+                        <table class="table table-hover align-middle">
+
+                            <thead>
+
+                                <tr>
+
+                                    <th>No</th>
+
+                                    <th>Judul</th>
+
+                                    <th>Mata Kuliah</th>
+
+                                    <th>Prioritas</th>
+
+                                    <th>Deadline</th>
+
+                                    <th>Status</th>
+
+                                    <th width="180">
+
+                                        Aksi
+
+                                    </th>
+
+                                </tr>
+
+                            </thead>
+
+                            <tbody id="taskTable">
+
+                                <tr>
+
+                                    <td colspan="7" class="text-center text-muted p-4">
+
+                                        Belum ada data tugas.
+
+                                    </td>
+
+                                </tr>
+
+                            </tbody>
+
+                        </table>
+
+                    </div>
+
+                </div>
+
+            </div>
+
+            <!-- ==========================
+        FOOTER
+========================== -->
+
+            <footer class="text-center mt-5 mb-4 text-muted">
+
+                © 2026 Student Task Manager | Dibuat oleh Novan Koten.
+
+            </footer>
+
+        </div>
+
+        <!-- Bootstrap -->
+
+        <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+
+        <!-- SweetAlert2 -->
+
+        <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+        <script>
+
+            /* ==========================================
+               CEK LOGIN
+            ========================================== */
+
+            const currentUser = JSON.parse(localStorage.getItem("currentUser"));
+
+            if (!currentUser) {
+
+                Swal.fire({
+
+                    icon: "warning",
+
+                    title: "Silakan Login",
+
+                    text: "Anda harus login terlebih dahulu."
+
+                }).then(() => {
+
+                    window.location.href = "index.html";
+
+                });
+
+            }
+
+            /* ==========================================
+               TAMPILKAN USER
+            ========================================== */
+
+            document.getElementById("namaUser").innerHTML =
+                currentUser.nama;
+
+
+            /* ==========================================
+               TANGGAL HARI INI
+            ========================================== */
+
+            document.getElementById("tanggalHari").innerHTML =
+                new Date().toLocaleDateString("id-ID", {
+
+                    weekday: "long",
+
+                    day: "numeric",
+
+                    month: "long",
+
+                    year: "numeric"
+
+                });
+
+
+            /* ==========================================
+               AMBIL DATA
+            ========================================== */
+
+            let semuaTugas =
+                JSON.parse(localStorage.getItem("tasks")) || [];
+
+            let tugasUser =
+                semuaTugas.filter(item =>
+                    item.username === currentUser.username);
+
+
+            /* ==========================================
+               HITUNG STATISTIK
+            ========================================== */
+
+            let total = tugasUser.length;
+
+            let selesai = 0;
+
+            let belum = 0;
+
+            let terlambat = 0;
+
+            const hariIni = new Date();
+
+            tugasUser.forEach(task => {
+
+                if (task.status === "Selesai") {
+
+                    selesai++;
+
+                } else {
+
+                    if (new Date(task.deadline) < hariIni) {
+
+                        terlambat++;
+
+                    } else {
+
+                        belum++;
+
+                    }
+
+                }
+
+            });
+
+            document.getElementById("totalTask").innerHTML = total;
+
+            document.getElementById("doneTask").innerHTML = selesai;
+
+            document.getElementById("pendingTask").innerHTML = belum;
+
+            document.getElementById("lateTask").innerHTML = terlambat;
+
+
+            /* ==========================================
+               TAMPILKAN DATA
+            ========================================== */
+
+            const table =
+                document.getElementById("taskTable");
+
+            table.innerHTML = "";
+
+            if (tugasUser.length === 0) {
+
+                table.innerHTML = `
+
+<tr>
+
+<td colspan="7" class="text-center p-4">
+
+Belum ada tugas.
+
+</td>
+
+</tr>
+
+`;
+
+            } else {
+
+                tugasUser.sort((a, b) =>
+
+                    new Date(a.deadline) - new Date(b.deadline)
+
+                );
+
+                tugasUser.forEach((task, index) => {
+
+                    let badgePrioritas = "secondary";
+
+                    if (task.prioritas === "Rendah") {
+
+                        badgePrioritas = "success";
+
+                    } else if (task.prioritas === "Sedang") {
+
+                        badgePrioritas = "warning";
+
+                    } else {
+
+                        badgePrioritas = "danger";
+
+                    }
+
+                    let badgeStatus = "warning";
+
+                    let statusText = "Belum Selesai";
+
+                    if (task.status === "Selesai") {
+
+                        badgeStatus = "success";
+
+                        statusText = "Selesai";
+
+                    } else {
+
+                        if (new Date(task.deadline) < hariIni) {
+
+                            badgeStatus = "danger";
+
+                            statusText = "Terlambat";
+
+                        }
+
+                    }
+
+                    table.innerHTML += `
+
+<tr>
+
+<td>${index + 1}</td>
+
+<td>${task.judul}</td>
+
+<td>${task.matkul}</td>
+
+<td>
+
+<span class="badge bg-${badgePrioritas}">
+
+${task.prioritas}
+
+</span>
+
+</td>
+
+<td>
+
+${task.deadline}
+
+</td>
+
+<td>
+
+<span class="badge bg-${badgeStatus}">
+
+${statusText}
+
+</span>
+
+</td>
+
+<td>
+
+<button
+class="btn btn-info btn-action text-white detailBtn"
+data-id="${task.id}">
+
+<i class="fa-solid fa-eye"></i>
+
+</button>
+
+<button
+class="btn btn-warning btn-action editBtn"
+data-id="${task.id}">
+
+<i class="fa-solid fa-pen"></i>
+
+</button>
+
+<button
+class="btn btn-danger btn-action deleteBtn"
+data-id="${task.id}">
+
+<i class="fa-solid fa-trash"></i>
+
+</button>
+
+</td>
+
+</tr>
+
+`;
+
+                });
+
+            }
+            /* ==========================================
+   SEARCH TUGAS
+========================================== */
+
+            const searchInput = document.getElementById("searchTask");
+
+            searchInput.addEventListener("keyup", function () {
+
+                const keyword = this.value.toLowerCase();
+
+                const rows = document.querySelectorAll("#taskTable tr");
+
+                rows.forEach(row => {
+
+                    if (row.children.length < 7) return;
+
+                    const judul = row.children[1].textContent.toLowerCase();
+                    const matkul = row.children[2].textContent.toLowerCase();
+
+                    row.style.display =
+                        judul.includes(keyword) || matkul.includes(keyword)
+                            ? ""
+                            : "none";
+
+                });
+
+            });
+
+
+            /* ==========================================
+               FILTER STATUS
+            ========================================== */
+
+            const filterStatus = document.getElementById("filterStatus");
+
+            filterStatus.addEventListener("change", function () {
+
+                const value = this.value;
+
+                const rows = document.querySelectorAll("#taskTable tr");
+
+                rows.forEach(row => {
+
+                    if (row.children.length < 7) return;
+
+                    const status = row.children[5].innerText.trim();
+
+                    if (value === "Semua") {
+
+                        row.style.display = "";
+
+                    } else {
+
+                        row.style.display =
+                            status === value ? "" : "none";
+
+                    }
+
+                });
+
+            });
+
+
+            /* ==========================================
+               HAPUS TUGAS
+            ========================================== */
+
+            document.addEventListener("click", function (e) {
+
+                const btn = e.target.closest(".deleteBtn");
+
+                if (!btn) return;
+
+                const id = Number(btn.dataset.id);
+
+                Swal.fire({
+
+                    title: "Hapus Tugas?",
+
+                    text: "Data yang dihapus tidak dapat dikembalikan.",
+
+                    icon: "warning",
+
+                    showCancelButton: true,
+
+                    confirmButtonText: "Hapus",
+
+                    cancelButtonText: "Batal",
+
+                    confirmButtonColor: "#dc3545"
+
+                }).then((result) => {
+
+                    if (result.isConfirmed) {
+
+                        semuaTugas = semuaTugas.filter(task => task.id !== id);
+
+                        localStorage.setItem("tasks", JSON.stringify(semuaTugas));
+
+                        Swal.fire({
+
+                            icon: "success",
+
+                            title: "Berhasil",
+
+                            text: "Tugas berhasil dihapus.",
+
+                            timer: 1200,
+
+                            showConfirmButton: false
+
+                        }).then(() => {
+
+                            location.reload();
+
+                        });
+
+                    }
+
+                });
+
+            });
+
+
+            /* ==========================================
+               DETAIL TUGAS
+            ========================================== */
+
+            document.addEventListener("click", function (e) {
+
+                const btn = e.target.closest(".detailBtn");
+
+                if (!btn) return;
+
+                localStorage.setItem("detailTaskId", btn.dataset.id);
+
+                window.location.href = "detail_tugas.html";
+
+            });
+
+
+            /* ==========================================
+               EDIT TUGAS
+            ========================================== */
+
+            document.addEventListener("click", function (e) {
+
+                const btn = e.target.closest(".editBtn");
+
+                if (!btn) return;
+
+                localStorage.setItem("editTaskId", btn.dataset.id);
+
+                window.location.href = "edit_tugas.html";
+
+            });
+
+
+            /* ==========================================
+               LOGOUT
+            ========================================== */
+
+            document.getElementById("logoutBtn")
+
+                .addEventListener("click", function (e) {
+
+                    e.preventDefault();
+
+                    Swal.fire({
+
+                        title: "Logout",
+
+                        text: "Yakin ingin keluar?",
+
+                        icon: "question",
+
+                        showCancelButton: true,
+
+                        confirmButtonText: "Logout",
+
+                        cancelButtonText: "Batal",
+
+                        confirmButtonColor: "#dc3545"
+
+                    }).then((result) => {
+
+                        if (result.isConfirmed) {
+
+                            localStorage.removeItem("currentUser");
+
+                            Swal.fire({
+
+                                icon: "success",
+
+                                title: "Logout Berhasil",
+
+                                timer: 1000,
+
+                                showConfirmButton: false
+
+                            }).then(() => {
+
+                                window.location.href = "index.html";
+
+                            });
+
+                        }
+
+                    });
+
+                });
+
+        </script>
+
+</body>
+
+</html>

@@ -1,0 +1,1236 @@
+<!DOCTYPE html>
+<html lang="id">
+
+<head>
+
+    <meta charset="UTF-8">
+
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>Profil | Student Task Manager</title>
+
+    <!-- Bootstrap -->
+
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
+
+    <!-- Font Awesome -->
+
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.6.0/css/all.min.css">
+
+    <!-- Google Font -->
+
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap"
+        rel="stylesheet">
+
+    <style>
+        * {
+
+            margin: 0;
+
+            padding: 0;
+
+            box-sizing: border-box;
+
+            font-family: 'Poppins', sans-serif;
+
+        }
+
+        body {
+
+            background: #f5f7fb;
+
+        }
+
+        a {
+
+            text-decoration: none;
+
+        }
+
+        /* ==========================
+           SIDEBAR
+        ========================== */
+
+        .sidebar {
+
+            position: fixed;
+
+            left: 0;
+
+            top: 0;
+
+            width: 250px;
+
+            height: 100vh;
+
+            background: #4F46E5;
+
+            color: #fff;
+
+            box-shadow: 5px 0 20px rgba(0, 0, 0, .15);
+
+            z-index: 1000;
+
+        }
+
+        .logo {
+
+            text-align: center;
+
+            padding: 25px;
+
+            font-size: 24px;
+
+            font-weight: 700;
+
+            border-bottom: 1px solid rgba(255, 255, 255, .2);
+
+        }
+
+        .logo i {
+
+            margin-right: 10px;
+
+        }
+
+        .sidebar ul {
+
+            list-style: none;
+
+            padding: 20px 0;
+
+        }
+
+        .sidebar ul li {
+
+            margin: 8px 15px;
+
+        }
+
+        .sidebar ul li a {
+
+            display: block;
+
+            color: white;
+
+            padding: 14px 18px;
+
+            border-radius: 12px;
+
+            transition: .3s;
+
+        }
+
+        .sidebar ul li a:hover {
+
+            background: white;
+
+            color: #4F46E5;
+
+        }
+
+        .sidebar ul li a i {
+
+            width: 28px;
+
+        }
+
+        /* ==========================
+           CONTENT
+        ========================== */
+
+        .content {
+
+            margin-left: 250px;
+
+            min-height: 100vh;
+
+        }
+
+        /* ==========================
+           TOPBAR
+        ========================== */
+
+        .topbar {
+
+            background: white;
+
+            padding: 18px 30px;
+
+            display: flex;
+
+            justify-content: space-between;
+
+            align-items: center;
+
+            box-shadow: 0 5px 15px rgba(0, 0, 0, .08);
+
+        }
+
+        .topbar h4 {
+
+            margin: 0;
+
+            font-weight: 600;
+
+        }
+
+        .user-box {
+
+            display: flex;
+
+            align-items: center;
+
+            gap: 15px;
+
+        }
+
+        .user-box img {
+
+            width: 45px;
+
+            height: 45px;
+
+            border-radius: 50%;
+
+        }
+
+        .user-name {
+
+            font-weight: 600;
+
+        }
+
+        /* ==========================
+           PAGE HEADER
+        ========================== */
+
+        .page-header {
+
+            padding: 35px;
+
+        }
+
+        .page-header h2 {
+
+            font-weight: 700;
+
+            color: #333;
+
+        }
+
+        .page-header p {
+
+            color: #666;
+
+        }
+
+        /* ==========================
+           CARD
+        ========================== */
+
+        .card-custom {
+
+            border: none;
+
+            border-radius: 18px;
+
+            box-shadow: 0 10px 25px rgba(0, 0, 0, .08);
+
+        }
+
+        .profile-avatar {
+
+            width: 140px;
+
+            height: 140px;
+
+            border-radius: 50%;
+
+            border: 6px solid #4F46E5;
+
+            object-fit: cover;
+
+        }
+
+        .profile-name {
+
+            font-size: 28px;
+
+            font-weight: 700;
+
+            margin-top: 20px;
+
+        }
+
+        .profile-username {
+
+            color: #777;
+
+            margin-bottom: 20px;
+
+        }
+
+        .info-title {
+
+            font-weight: 600;
+
+            color: #666;
+
+            margin-bottom: 5px;
+
+        }
+
+        .info-value {
+
+            background: #f8f9fa;
+
+            border-radius: 10px;
+
+            padding: 12px 15px;
+
+            margin-bottom: 20px;
+
+        }
+
+        .btn-custom {
+
+            border-radius: 12px;
+
+            padding: 12px 25px;
+
+            font-weight: 600;
+
+        }
+
+        .stat-card {
+
+            border: none;
+
+            border-radius: 16px;
+
+            box-shadow: 0 10px 20px rgba(0, 0, 0, .08);
+
+        }
+
+        .stat-card h2 {
+
+            font-weight: 700;
+
+        }
+
+        @media(max-width:992px) {
+
+            .sidebar {
+
+                width: 90px;
+
+            }
+
+            .logo span {
+
+                display: none;
+
+            }
+
+            .sidebar ul li a span {
+
+                display: none;
+
+            }
+
+            .content {
+
+                margin-left: 90px;
+
+            }
+
+        }
+
+        @media(max-width:768px) {
+
+            .sidebar {
+
+                display: none;
+
+            }
+
+            .content {
+
+                margin-left: 0;
+
+            }
+
+        }
+    </style>
+
+</head>
+
+<body>
+
+    <!-- ==========================
+SIDEBAR
+========================== -->
+
+    <div class="sidebar">
+
+        <div class="logo">
+
+            <i class="fa-solid fa-book-open"></i>
+
+            <span>STM</span>
+
+        </div>
+
+        <ul>
+
+            <li>
+
+                <a href="dashboard.html">
+
+                    <i class="fa-solid fa-house"></i>
+
+                    <span>Dashboard</span>
+
+                </a>
+
+            </li>
+
+            <li>
+
+                <a href="tambah_tugas.html">
+
+                    <i class="fa-solid fa-plus"></i>
+
+                    <span>Tambah Tugas</span>
+
+                </a>
+
+            </li>
+
+            <li>
+
+                <a href="daftar_tugas.html">
+
+                    <i class="fa-solid fa-list-check"></i>
+
+                    <span>Daftar Tugas</span>
+
+                </a>
+
+            </li>
+
+            <li>
+
+                <a href="profil.html">
+
+                    <i class="fa-solid fa-user"></i>
+
+                    <span>Profil</span>
+
+                </a>
+
+            </li>
+
+            <li>
+
+                <a href="#" id="logoutBtn">
+
+                    <i class="fa-solid fa-right-from-bracket"></i>
+
+                    <span>Logout</span>
+
+                </a>
+
+            </li>
+
+        </ul>
+
+    </div>
+
+    <!-- ==========================
+CONTENT
+========================== -->
+
+    <div class="content">
+
+        <div class="topbar">
+
+            <h4>
+
+                Student Task Manager
+
+            </h4>
+
+            <div class="user-box">
+
+                <img src="https://ui-avatars.com/api/?name=User&background=4F46E5&color=ffffff">
+
+                <div>
+
+                    <div class="user-name" id="namaUser">
+
+                        Loading...
+
+                    </div>
+
+                    <small id="tanggalHari">
+
+                        Loading...
+
+                    </small>
+
+                </div>
+
+            </div>
+
+        </div>
+
+        <div class="page-header">
+
+            <h2>
+
+                <i class="fa-solid fa-user text-primary"></i>
+
+                Profil Pengguna
+
+            </h2>
+
+            <p>
+
+                Informasi akun Student Task Manager.
+
+            </p>
+
+        </div>
+
+        <div class="container-fluid px-4">
+
+            <div class="row">
+
+                <div class="col-lg-4">
+
+                    <div class="card card-custom">
+
+                        <div class="card-body text-center">
+
+                            <img id="fotoProfil" class="profile-avatar"
+                                src="https://ui-avatars.com/api/?name=User&background=4F46E5&color=ffffff">
+
+                            <div class="profile-name" id="namaLengkap">
+
+                                Loading...
+
+                            </div>
+
+                            <div class="profile-username" id="usernameUser">
+
+                                @username
+
+                            </div>
+                            <hr>
+
+                            <div class="text-start">
+
+                                <div class="info-title">
+
+                                    <i class="fa-solid fa-user"></i>
+
+                                    Nama Lengkap
+
+                                </div>
+
+                                <div class="info-value" id="infoNama">
+
+                                    -
+
+                                </div>
+
+                                <div class="info-title">
+
+                                    <i class="fa-solid fa-at"></i>
+
+                                    Username
+
+                                </div>
+
+                                <div class="info-value" id="infoUsername">
+
+                                    -
+
+                                </div>
+
+                                <div class="info-title">
+
+                                    <i class="fa-solid fa-envelope"></i>
+
+                                    Email
+
+                                </div>
+
+                                <div class="info-value" id="infoEmail">
+
+                                    -
+
+                                </div>
+
+                            </div>
+
+                            <div class="d-grid gap-2 mt-3">
+
+                                <button class="btn btn-warning btn-custom text-white" id="editProfilBtn">
+
+                                    <i class="fa-solid fa-user-pen"></i>
+
+                                    Edit Profil
+
+                                </button>
+
+                                <button class="btn btn-primary btn-custom" id="gantiPasswordBtn">
+
+                                    <i class="fa-solid fa-key"></i>
+
+                                    Ganti Password
+
+                                </button>
+
+                            </div>
+
+                        </div>
+
+                    </div>
+
+                </div>
+
+                <!-- ==========================
+                 STATISTIK
+            ========================== -->
+
+                <div class="col-lg-8">
+
+                    <div class="row g-4">
+
+                        <div class="col-md-6">
+
+                            <div class="card stat-card">
+
+                                <div class="card-body text-center">
+
+                                    <i class="fa-solid fa-book fa-2x text-primary mb-3"></i>
+
+                                    <h2 id="totalTask">
+
+                                        0
+
+                                    </h2>
+
+                                    <p class="text-muted mb-0">
+
+                                        Total Tugas
+
+                                    </p>
+
+                                </div>
+
+                            </div>
+
+                        </div>
+
+                        <div class="col-md-6">
+
+                            <div class="card stat-card">
+
+                                <div class="card-body text-center">
+
+                                    <i class="fa-solid fa-circle-check fa-2x text-success mb-3"></i>
+
+                                    <h2 id="doneTask">
+
+                                        0
+
+                                    </h2>
+
+                                    <p class="text-muted mb-0">
+
+                                        Tugas Selesai
+
+                                    </p>
+
+                                </div>
+
+                            </div>
+
+                        </div>
+
+                        <div class="col-md-6">
+
+                            <div class="card stat-card">
+
+                                <div class="card-body text-center">
+
+                                    <i class="fa-solid fa-clock fa-2x text-warning mb-3"></i>
+
+                                    <h2 id="pendingTask">
+
+                                        0
+
+                                    </h2>
+
+                                    <p class="text-muted mb-0">
+
+                                        Belum Selesai
+
+                                    </p>
+
+                                </div>
+
+                            </div>
+
+                        </div>
+
+                        <div class="col-md-6">
+
+                            <div class="card stat-card">
+
+                                <div class="card-body text-center">
+
+                                    <i class="fa-solid fa-triangle-exclamation fa-2x text-danger mb-3"></i>
+
+                                    <h2 id="lateTask">
+
+                                        0
+
+                                    </h2>
+
+                                    <p class="text-muted mb-0">
+
+                                        Terlambat
+
+                                    </p>
+
+                                </div>
+
+                            </div>
+
+                        </div>
+
+                    </div>
+
+                </div>
+
+            </div>
+
+        </div>
+
+    </div>
+
+    <!-- FOOTER -->
+
+    <footer class="text-center mt-5 mb-4 text-muted">
+
+        © 2026 Student Task Manager | Dibuat oleh Novan koten.
+
+
+    </footer>
+
+    <!-- Bootstrap -->
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+
+    <!-- SweetAlert2 -->
+
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+
+    <script>
+
+        /* ==========================================
+           CEK LOGIN
+        ========================================== */
+
+        const currentUser =
+            JSON.parse(localStorage.getItem("currentUser"));
+
+        if (!currentUser) {
+
+            Swal.fire({
+
+                icon: "warning",
+
+                title: "Silakan Login",
+
+                text: "Anda harus login terlebih dahulu."
+
+            }).then(() => {
+
+                window.location.href = "index.html";
+
+            });
+
+        }
+
+        /* ==========================================
+           TAMPILKAN USER
+        ========================================== */
+
+        document.getElementById("namaUser").innerHTML =
+            currentUser.nama;
+
+        document.getElementById("tanggalHari").innerHTML =
+            new Date().toLocaleDateString("id-ID", {
+
+                weekday: "long",
+
+                day: "numeric",
+
+                month: "long",
+
+                year: "numeric"
+
+            });
+
+        document.getElementById("namaLengkap").innerHTML =
+            currentUser.nama;
+
+        document.getElementById("usernameUser").innerHTML =
+            "@" + currentUser.username;
+
+        document.getElementById("infoNama").innerHTML =
+            currentUser.nama;
+
+        document.getElementById("infoUsername").innerHTML =
+            currentUser.username;
+
+        document.getElementById("infoEmail").innerHTML =
+            currentUser.email;
+
+        document.getElementById("fotoProfil").src =
+            "https://ui-avatars.com/api/?name=" +
+            encodeURIComponent(currentUser.nama) +
+            "&background=4F46E5&color=ffffff";
+        /* ==========================================
+HITUNG STATISTIK TUGAS
+========================================== */
+
+        const semuaTugas =
+            JSON.parse(localStorage.getItem("tasks")) || [];
+
+        const tugasUser =
+            semuaTugas.filter(item =>
+                item.username === currentUser.username);
+
+        let total = tugasUser.length;
+
+        let selesai = 0;
+
+        let belum = 0;
+
+        let terlambat = 0;
+
+        const hariIni = new Date();
+
+        tugasUser.forEach(task => {
+
+            if (task.status === "Selesai") {
+
+                selesai++;
+
+            } else {
+
+                if (new Date(task.deadline) < hariIni) {
+
+                    terlambat++;
+
+                } else {
+
+                    belum++;
+
+                }
+
+            }
+
+        });
+
+        document.getElementById("totalTask").innerHTML =
+            total;
+
+        document.getElementById("doneTask").innerHTML =
+            selesai;
+
+        document.getElementById("pendingTask").innerHTML =
+            belum;
+
+        document.getElementById("lateTask").innerHTML =
+            terlambat;
+
+
+        /* ==========================================
+           EDIT PROFIL
+        ========================================== */
+
+        document.getElementById("editProfilBtn")
+
+            .addEventListener("click", function () {
+
+                Swal.fire({
+
+                    title: "Edit Profil",
+
+                    html: `
+
+<input id="editNama" class="swal2-input"
+placeholder="Nama Lengkap"
+value="${currentUser.nama}">
+
+<input id="editEmail" class="swal2-input"
+placeholder="Email"
+value="${currentUser.email}">
+
+`,
+
+                    focusConfirm: false,
+
+                    showCancelButton: true,
+
+                    confirmButtonText: "Simpan",
+
+                    cancelButtonText: "Batal",
+
+                    confirmButtonColor: "#4F46E5",
+
+                    preConfirm: () => {
+
+                        return {
+
+                            nama: document.getElementById("editNama").value.trim(),
+
+                            email: document.getElementById("editEmail").value.trim()
+
+                        };
+
+                    }
+
+                }).then((result) => {
+
+                    if (!result.isConfirmed) return;
+
+                    const data = result.value;
+
+                    if (
+
+                        data.nama === "" ||
+
+                        data.email === ""
+
+                    ) {
+
+                        Swal.fire({
+
+                            icon: "warning",
+
+                            title: "Data belum lengkap"
+
+                        });
+
+                        return;
+
+                    }
+
+                    let users =
+                        JSON.parse(localStorage.getItem("users")) || [];
+
+                    const index =
+                        users.findIndex(user =>
+                            user.username === currentUser.username);
+
+                    if (index !== -1) {
+
+                        users[index].nama = data.nama;
+
+                        users[index].email = data.email;
+
+                        localStorage.setItem(
+                            "users",
+                            JSON.stringify(users)
+                        );
+
+                    }
+
+                    currentUser.nama = data.nama;
+
+                    currentUser.email = data.email;
+
+                    localStorage.setItem(
+
+                        "currentUser",
+
+                        JSON.stringify(currentUser)
+
+                    );
+
+                    Swal.fire({
+
+                        icon: "success",
+
+                        title: "Berhasil",
+
+                        text: "Profil berhasil diperbarui.",
+
+                        timer: 1500,
+
+                        showConfirmButton: false
+
+                    }).then(() => {
+
+                        location.reload();
+
+                    });
+
+                });
+
+            });
+
+
+        /* ==========================================
+           GANTI PASSWORD
+        ========================================== */
+
+        document.getElementById("gantiPasswordBtn")
+
+            .addEventListener("click", function () {
+
+                Swal.fire({
+
+                    title: "Ganti Password",
+
+                    html: `
+
+<input
+type="password"
+id="passwordBaru"
+class="swal2-input"
+placeholder="Password Baru">
+
+<input
+type="password"
+id="konfirmasiPassword"
+class="swal2-input"
+placeholder="Konfirmasi Password">
+
+`,
+
+                    showCancelButton: true,
+
+                    confirmButtonText: "Simpan",
+
+                    cancelButtonText: "Batal",
+
+                    confirmButtonColor: "#4F46E5"
+
+                }).then((result) => {
+
+                    if (!result.isConfirmed) return;
+
+                    const pass =
+                        document.getElementById("passwordBaru").value;
+
+                    const konfirmasi =
+                        document.getElementById("konfirmasiPassword").value;
+
+                    if (
+
+                        pass === "" ||
+
+                        konfirmasi === ""
+
+                    ) {
+
+                        Swal.fire({
+
+                            icon: "warning",
+
+                            title: "Password tidak boleh kosong"
+
+                        });
+
+                        return;
+
+                    }
+
+                    if (pass !== konfirmasi) {
+
+                        Swal.fire({
+
+                            icon: "error",
+
+                            title: "Konfirmasi password tidak sama"
+
+                        });
+
+                        return;
+
+                    }
+
+                    let users =
+                        JSON.parse(localStorage.getItem("users")) || [];
+
+                    const index =
+                        users.findIndex(user =>
+                            user.username === currentUser.username);
+
+                    if (index !== -1) {
+
+                        users[index].password = pass;
+
+                        localStorage.setItem(
+
+                            "users",
+
+                            JSON.stringify(users)
+
+                        );
+
+                    }
+
+                    Swal.fire({
+
+                        icon: "success",
+
+                        title: "Password berhasil diubah",
+
+                        timer: 1500,
+
+                        showConfirmButton: false
+
+                    });
+
+                });
+
+            });
+        /* ==========================================
+LOGOUT
+========================================== */
+
+        document.getElementById("logoutBtn")
+
+            .addEventListener("click", function (e) {
+
+                e.preventDefault();
+
+                Swal.fire({
+
+                    title: "Logout",
+
+                    text: "Apakah Anda yakin ingin logout?",
+
+                    icon: "question",
+
+                    showCancelButton: true,
+
+                    confirmButtonText: "Logout",
+
+                    cancelButtonText: "Batal",
+
+                    confirmButtonColor: "#dc3545"
+
+                })
+
+                    .then((result) => {
+
+                        if (result.isConfirmed) {
+
+                            localStorage.removeItem("currentUser");
+
+                            Swal.fire({
+
+                                icon: "success",
+
+                                title: "Logout Berhasil",
+
+                                timer: 1200,
+
+                                showConfirmButton: false
+
+                            }).then(() => {
+
+                                window.location.href = "index.html";
+
+                            });
+
+                        }
+
+                    });
+
+            });
+
+
+        /* ==========================================
+           ANIMASI CARD
+        ========================================== */
+
+        const cards =
+            document.querySelectorAll(".card");
+
+        cards.forEach((card, index) => {
+
+            card.style.opacity = "0";
+
+            card.style.transform = "translateY(30px)";
+
+            setTimeout(() => {
+
+                card.style.transition = ".6s";
+
+                card.style.opacity = "1";
+
+                card.style.transform = "translateY(0)";
+
+            }, 150 * index);
+
+        });
+
+
+        /* ==========================================
+           ANIMASI HEADER
+        ========================================== */
+
+        const header =
+            document.querySelector(".page-header");
+
+        header.style.opacity = "0";
+
+        header.style.transform = "translateY(-20px)";
+
+        setTimeout(() => {
+
+            header.style.transition = ".6s";
+
+            header.style.opacity = "1";
+
+            header.style.transform = "translateY(0)";
+
+        }, 100);
+
+
+        /* ==========================================
+           EFEK LOADING
+        ========================================== */
+
+        window.addEventListener("load", () => {
+
+            document.body.style.opacity = "0";
+
+            setTimeout(() => {
+
+                document.body.style.transition = ".5s";
+
+                document.body.style.opacity = "1";
+
+            }, 100);
+
+        });
+
+    </script>
+
+</body>
+
+</html>

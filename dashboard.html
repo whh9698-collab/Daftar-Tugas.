@@ -1,0 +1,1604 @@
+<!DOCTYPE html>
+<html lang="id">
+
+<head>
+
+    <meta charset="UTF-8">
+
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>Dashboard | Student Task Manager</title>
+
+    <!-- Bootstrap -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
+
+    <!-- Font Awesome -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.6.0/css/all.min.css">
+
+    <!-- Google Font -->
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap"
+        rel="stylesheet">
+
+    <style>
+        /*==================================================
+  CSS 1A
+  RESET + ROOT + BODY + SCROLLBAR
+==================================================*/
+
+        @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700;800&display=swap');
+
+        *,
+        *::before,
+        *::after {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        html {
+            scroll-behavior: smooth;
+        }
+
+        :root {
+
+            /* Primary Color */
+            --primary: #4F46E5;
+            --primary-light: #6366F1;
+            --secondary: #8B5CF6;
+
+            /* Status */
+            --success: #10B981;
+            --warning: #F59E0B;
+            --danger: #EF4444;
+            --info: #06B6D4;
+
+            /* Background */
+            --bg: #EEF2FF;
+            --card: #FFFFFF;
+            --white: #FFFFFF;
+
+            /* Text */
+            --dark: #111827;
+            --text: #374151;
+            --muted: #6B7280;
+
+            /* Border */
+            --border: #E5E7EB;
+
+            /* Shadow */
+            --shadow-sm: 0 5px 15px rgba(0, 0, 0, .05);
+            --shadow: 0 15px 35px rgba(0, 0, 0, .08);
+            --shadow-lg: 0 25px 60px rgba(0, 0, 0, .12);
+
+            /* Radius */
+            --radius: 20px;
+            --radius-lg: 28px;
+
+            /* Animation */
+            --transition: .35s ease;
+
+        }
+
+        body {
+
+            font-family: 'Poppins', sans-serif;
+            background:
+                radial-gradient(circle at top right, #dbeafe 0%, transparent 35%),
+                radial-gradient(circle at bottom left, #ede9fe 0%, transparent 35%),
+                linear-gradient(135deg, #eef2ff, #f8fafc);
+
+            color: var(--text);
+
+            min-height: 100vh;
+
+            overflow-x: hidden;
+
+            line-height: 1.6;
+
+            position: relative;
+
+        }
+
+        /* Background Blur */
+
+        body::before {
+
+            content: "";
+
+            position: fixed;
+
+            width: 420px;
+
+            height: 420px;
+
+            background: rgba(99, 102, 241, .15);
+
+            filter: blur(120px);
+
+            border-radius: 50%;
+
+            top: -120px;
+
+            right: -120px;
+
+            z-index: -2;
+
+        }
+
+        body::after {
+
+            content: "";
+
+            position: fixed;
+
+            width: 350px;
+
+            height: 350px;
+
+            background: rgba(139, 92, 246, .12);
+
+            filter: blur(120px);
+
+            border-radius: 50%;
+
+            bottom: -120px;
+
+            left: -120px;
+
+            z-index: -2;
+
+        }
+
+        /* Typography */
+
+        h1,
+        h2,
+        h3,
+        h4,
+        h5,
+        h6 {
+
+            color: var(--dark);
+
+            font-weight: 700;
+
+        }
+
+        p {
+
+            color: var(--muted);
+
+        }
+
+        a {
+
+            text-decoration: none;
+
+            transition: var(--transition);
+
+        }
+
+        img {
+
+            max-width: 100%;
+
+            display: block;
+
+        }
+
+        /*==================================================
+  SCROLLBAR
+==================================================*/
+
+        ::-webkit-scrollbar {
+
+            width: 10px;
+
+        }
+
+        ::-webkit-scrollbar-track {
+
+            background: #E5E7EB;
+
+        }
+
+        ::-webkit-scrollbar-thumb {
+
+            background: linear-gradient(180deg,
+                    var(--primary-light),
+                    var(--secondary));
+
+            border-radius: 30px;
+
+        }
+
+        ::-webkit-scrollbar-thumb:hover {
+
+            background: linear-gradient(180deg,
+                    var(--primary),
+                    #6D28D9);
+
+        }
+
+        /* Selection */
+
+        ::selection {
+
+            background: var(--primary);
+
+            color: #fff;
+
+        }
+
+        /*==================================================
+  ANIMATION GLOBAL
+==================================================*/
+
+        @keyframes fadeUp {
+
+            from {
+
+                opacity: 0;
+
+                transform: translateY(25px);
+
+            }
+
+            to {
+
+                opacity: 1;
+
+                transform: translateY(0);
+
+            }
+
+        }
+
+        @keyframes floating {
+
+            0% {
+
+                transform: translateY(0);
+
+            }
+
+            50% {
+
+                transform: translateY(-8px);
+
+            }
+
+            100% {
+
+                transform: translateY(0);
+
+            }
+
+        }
+
+        .fade-up {
+
+            animation: fadeUp .7s ease forwards;
+
+        }
+
+        /*==================================================
+  CSS 1B
+  SIDEBAR PREMIUM MODERN
+==================================================*/
+
+        .sidebar {
+
+            position: fixed;
+
+            top: 15px;
+
+            left: 15px;
+
+            width: 280px;
+
+            height: calc(100vh - 30px);
+
+            padding: 25px 18px;
+
+            border-radius: 28px;
+
+            background: linear-gradient(180deg,
+                    rgba(79, 70, 229, .97),
+                    rgba(49, 46, 129, .97));
+
+            backdrop-filter: blur(18px);
+
+            -webkit-backdrop-filter: blur(18px);
+
+            box-shadow:
+                0 25px 60px rgba(0, 0, 0, .18),
+                inset 0 1px 1px rgba(255, 255, 255, .15);
+
+            overflow: hidden;
+
+            z-index: 999;
+
+            transition: .4s ease;
+
+        }
+
+        /* Background Effect */
+
+        .sidebar::before {
+
+            content: "";
+
+            position: absolute;
+
+            width: 260px;
+
+            height: 260px;
+
+            background: rgba(255, 255, 255, .08);
+
+            border-radius: 50%;
+
+            top: -120px;
+
+            right: -120px;
+
+        }
+
+        .sidebar::after {
+
+            content: "";
+
+            position: absolute;
+
+            width: 180px;
+
+            height: 180px;
+
+            background: rgba(255, 255, 255, .05);
+
+            border-radius: 50%;
+
+            bottom: -70px;
+
+            left: -70px;
+
+        }
+
+        /*=========================
+LOGO
+=========================*/
+
+        .sidebar .logo {
+
+            position: relative;
+
+            z-index: 2;
+
+            display: flex;
+
+            align-items: center;
+
+            justify-content: center;
+
+            gap: 12px;
+
+            margin-bottom: 35px;
+
+            padding-bottom: 25px;
+
+            border-bottom: 1px solid rgba(255, 255, 255, .12);
+
+        }
+
+        .sidebar .logo i {
+
+            width: 60px;
+
+            height: 60px;
+
+            border-radius: 18px;
+
+            display: flex;
+
+            justify-content: center;
+
+            align-items: center;
+
+            background: rgba(255, 255, 255, .15);
+
+            color: #FACC15;
+
+            font-size: 26px;
+
+            box-shadow: 0 10px 20px rgba(0, 0, 0, .15);
+
+        }
+
+        .sidebar .logo span {
+
+            font-size: 28px;
+
+            font-weight: 700;
+
+            color: #fff;
+
+            letter-spacing: 1px;
+
+        }
+
+        /*=========================
+MENU
+=========================*/
+
+        .sidebar ul {
+
+            list-style: none;
+
+            padding: 0;
+
+            margin: 0;
+
+            position: relative;
+
+            z-index: 2;
+
+        }
+
+        .sidebar ul li {
+
+            margin-bottom: 10px;
+
+        }
+
+        .sidebar ul li a {
+
+            position: relative;
+
+            display: flex;
+
+            align-items: center;
+
+            gap: 16px;
+
+            padding: 15px 18px;
+
+            color: #fff;
+
+            border-radius: 18px;
+
+            overflow: hidden;
+
+            transition: .35s ease;
+
+            font-size: 15px;
+
+            font-weight: 500;
+
+        }
+
+        .sidebar ul li a i {
+
+            width: 45px;
+
+            height: 45px;
+
+            display: flex;
+
+            align-items: center;
+
+            justify-content: center;
+
+            border-radius: 14px;
+
+            background: rgba(255, 255, 255, .10);
+
+            font-size: 18px;
+
+            transition: .35s;
+
+        }
+
+        /* Hover Effect */
+
+        .sidebar ul li a::before {
+
+            content: "";
+
+            position: absolute;
+
+            left: 0;
+
+            top: 0;
+
+            width: 0;
+
+            height: 100%;
+
+            background: rgba(255, 255, 255, .13);
+
+            transition: .35s;
+
+            z-index: -1;
+
+        }
+
+        .sidebar ul li a:hover::before {
+
+            width: 100%;
+
+        }
+
+        .sidebar ul li a:hover {
+
+            transform: translateX(8px);
+
+        }
+
+        .sidebar ul li a:hover i {
+
+            background: #fff;
+
+            color: var(--primary);
+
+            transform: rotate(8deg) scale(1.08);
+
+        }
+
+        .sidebar ul li a span {
+
+            letter-spacing: .3px;
+
+        }
+
+        /* Active Menu */
+
+        .sidebar ul li a.active {
+
+            background: rgba(255, 255, 255, .16);
+
+            box-shadow: 0 10px 25px rgba(0, 0, 0, .15);
+
+        }
+
+        .sidebar ul li a.active i {
+
+            background: #fff;
+
+            color: var(--primary);
+
+        }
+
+        /*=========================
+SIDEBAR ANIMATION
+=========================*/
+
+        .sidebar {
+
+            animation: sidebarShow .8s ease;
+
+        }
+
+        @keyframes sidebarShow {
+
+            from {
+
+                opacity: 0;
+
+                transform: translateX(-50px);
+
+            }
+
+            to {
+
+                opacity: 1;
+
+                transform: translateX(0);
+
+            }
+
+        }
+
+        /*==================================================
+  CSS 1C
+  TOPBAR PREMIUM MODERN
+==================================================*/
+
+        .topbar {
+
+            margin: 20px;
+
+            padding: 18px 28px;
+
+            border-radius: 22px;
+
+            display: flex;
+
+            justify-content: space-between;
+
+            align-items: center;
+
+            background: rgba(255, 255, 255, .75);
+
+            backdrop-filter: blur(18px);
+
+            -webkit-backdrop-filter: blur(18px);
+
+            box-shadow: var(--shadow);
+
+            border: 1px solid rgba(255, 255, 255, .6);
+
+            position: relative;
+
+            overflow: hidden;
+
+            transition: .4s ease;
+
+        }
+
+        /* Decorative glow */
+
+        .topbar::before {
+
+            content: "";
+
+            position: absolute;
+
+            width: 200px;
+
+            height: 200px;
+
+            background: rgba(99, 102, 241, .15);
+
+            border-radius: 50%;
+
+            top: -80px;
+
+            right: -80px;
+
+            filter: blur(40px);
+
+        }
+
+        .topbar h4 {
+
+            font-weight: 700;
+
+            font-size: 20px;
+
+            color: var(--dark);
+
+            display: flex;
+
+            align-items: center;
+
+            gap: 10px;
+
+        }
+
+        /* USER BOX */
+
+        .user-box {
+
+            display: flex;
+
+            align-items: center;
+
+            gap: 14px;
+
+            padding: 8px 14px;
+
+            border-radius: 16px;
+
+            background: rgba(99, 102, 241, .08);
+
+            transition: .3s ease;
+
+        }
+
+        .user-box:hover {
+
+            transform: translateY(-2px);
+
+            background: rgba(99, 102, 241, .12);
+
+        }
+
+        /* Avatar */
+
+        .user-box img {
+
+            width: 48px;
+
+            height: 48px;
+
+            border-radius: 50%;
+
+            border: 3px solid rgba(99, 102, 241, .5);
+
+            box-shadow: 0 8px 20px rgba(0, 0, 0, .1);
+
+            transition: .3s ease;
+
+        }
+
+        .user-box img:hover {
+
+            transform: scale(1.05) rotate(3deg);
+
+        }
+
+        /* TEXT USER */
+
+        .user-name {
+
+            font-weight: 700;
+
+            color: var(--dark);
+
+            font-size: 15px;
+
+        }
+
+        #salam {
+
+            font-size: 13px;
+
+            color: var(--muted);
+
+        }
+
+        /* TOPBAR ANIMATION */
+
+        .topbar {
+
+            animation: fadeUp .6s ease;
+
+        }
+
+        /* RESPONSIVE */
+
+        @media(max-width:768px) {
+
+            .topbar {
+
+                flex-direction: column;
+
+                gap: 12px;
+
+                text-align: center;
+
+            }
+
+            .user-box {
+
+                justify-content: center;
+
+                width: 100%;
+
+            }
+
+        }
+    </style>
+
+</head>
+
+<body>
+
+    <!-- ======================
+        SIDEBAR
+======================= -->
+
+    <div class="sidebar">
+
+        <div class="logo">
+
+            <i class="fa-solid fa-book-open"></i>
+
+            <span>STM</span>
+
+        </div>
+
+        <ul>
+
+            <li>
+
+                <a href="dashboard.html">
+
+                    <i class="fa-solid fa-house"></i>
+
+                    <span>Dashboard</span>
+
+                </a>
+
+            </li>
+
+            <li>
+
+                <a href="tambah_tugas.html">
+
+                    <i class="fa-solid fa-plus"></i>
+
+                    <span>Tambah Tugas</span>
+
+                </a>
+
+            </li>
+
+            <li>
+
+                <a href="daftar_tugas.html">
+
+                    <i class="fa-solid fa-list-check"></i>
+
+                    <span>Daftar Tugas</span>
+
+                </a>
+
+            </li>
+
+            <li>
+
+                <a href="profil.html">
+
+                    <i class="fa-solid fa-user"></i>
+
+                    <span>Profil</span>
+
+                </a>
+
+            </li>
+
+            <li>
+
+                <a href="#" id="logoutBtn">
+
+                    <i class="fa-solid fa-right-from-bracket"></i>
+
+                    <span>Logout</span>
+
+                </a>
+
+            </li>
+
+        </ul>
+
+    </div>
+
+    <!-- ======================
+        CONTENT
+======================= -->
+
+    <div class="content">
+
+        <!-- Navbar -->
+
+        <div class="topbar">
+
+            <h4>
+
+                Student Task Manager
+
+            </h4>
+
+            <div class="user-box">
+
+                <img src="https://ui-avatars.com/api/?name=User&background=4F46E5&color=fff" alt="Avatar">
+
+                <div>
+
+                    <div class="user-name" id="namaUser">
+
+                        Loading...
+
+                    </div>
+
+                    <small id="salam">
+
+                        Memuat...
+
+                    </small>
+
+                </div>
+
+            </div>
+
+        </div>
+
+        <!-- Header -->
+
+        <div class="dashboard-header">
+
+            <h2>
+
+                Dashboard
+
+            </h2>
+
+            <p>
+
+                Selamat datang di Student Task Manager
+
+            </p>
+
+        </div>
+        <!-- ======================
+        STATISTIK
+======================= -->
+
+        <div class="container-fluid px-4">
+
+            <div class="row g-4">
+
+                <!-- Total -->
+
+                <div class="col-lg-3 col-md-6">
+
+                    <div class="card card-custom">
+
+                        <div class="card-body d-flex justify-content-between align-items-center">
+
+                            <div>
+
+                                <small class="text-muted">
+
+                                    Total Tugas
+
+                                </small>
+
+                                <h2 id="totalTask">
+
+                                    0
+
+                                </h2>
+
+                            </div>
+
+                            <div class="icon-box bg1">
+
+                                <i class="fa-solid fa-book"></i>
+
+                            </div>
+
+                        </div>
+
+                    </div>
+
+                </div>
+
+                <!-- Selesai -->
+
+                <div class="col-lg-3 col-md-6">
+
+                    <div class="card card-custom">
+
+                        <div class="card-body d-flex justify-content-between align-items-center">
+
+                            <div>
+
+                                <small class="text-muted">
+
+                                    Tugas Selesai
+
+                                </small>
+
+                                <h2 id="doneTask">
+
+                                    0
+
+                                </h2>
+
+                            </div>
+
+                            <div class="icon-box bg2">
+
+                                <i class="fa-solid fa-circle-check"></i>
+
+                            </div>
+
+                        </div>
+
+                    </div>
+
+                </div>
+
+                <!-- Belum -->
+
+                <div class="col-lg-3 col-md-6">
+
+                    <div class="card card-custom">
+
+                        <div class="card-body d-flex justify-content-between align-items-center">
+
+                            <div>
+
+                                <small class="text-muted">
+
+                                    Belum Selesai
+
+                                </small>
+
+                                <h2 id="pendingTask">
+
+                                    0
+
+                                </h2>
+
+                            </div>
+
+                            <div class="icon-box bg3">
+
+                                <i class="fa-solid fa-clock"></i>
+
+                            </div>
+
+                        </div>
+
+                    </div>
+
+                </div>
+
+                <!-- Terlambat -->
+
+                <div class="col-lg-3 col-md-6">
+
+                    <div class="card card-custom">
+
+                        <div class="card-body d-flex justify-content-between align-items-center">
+
+                            <div>
+
+                                <small class="text-muted">
+
+                                    Terlambat
+
+                                </small>
+
+                                <h2 id="lateTask">
+
+                                    0
+
+                                </h2>
+
+                            </div>
+
+                            <div class="icon-box bg4">
+
+                                <i class="fa-solid fa-triangle-exclamation"></i>
+
+                            </div>
+
+                        </div>
+
+                    </div>
+
+                </div>
+
+            </div>
+
+        </div>
+
+        <!-- ======================
+        MENU CEPAT
+======================= -->
+
+        <div class="container-fluid px-4 mt-5">
+
+            <div class="row g-4">
+
+                <div class="col-lg-4">
+
+                    <div class="card card-custom text-center p-4">
+
+                        <i class="fa-solid fa-plus fa-3x text-primary mb-3"></i>
+
+                        <h5>Tambah Tugas</h5>
+
+                        <p class="text-muted">
+
+                            Tambahkan tugas baru.
+
+                        </p>
+
+                        <a href="tambah_tugas.html" class="btn btn-primary">
+
+                            Buka
+
+                        </a>
+
+                    </div>
+
+                </div>
+
+                <div class="col-lg-4">
+
+                    <div class="card card-custom text-center p-4">
+
+                        <i class="fa-solid fa-list-check fa-3x text-success mb-3"></i>
+
+                        <h5>Daftar Tugas</h5>
+
+                        <p class="text-muted">
+
+                            Lihat semua tugas.
+
+                        </p>
+
+                        <a href="daftar_tugas.html" class="btn btn-success">
+
+                            Buka
+
+                        </a>
+
+                    </div>
+
+                </div>
+
+                <div class="col-lg-4">
+
+                    <div class="card card-custom text-center p-4">
+
+                        <i class="fa-solid fa-user fa-3x text-warning mb-3"></i>
+
+                        <h5>Profil</h5>
+
+                        <p class="text-muted">
+
+                            Kelola data akun.
+
+                        </p>
+
+                        <a href="profil.html" class="btn btn-warning text-white">
+
+                            Buka
+
+                        </a>
+
+                    </div>
+
+                </div>
+
+            </div>
+
+        </div>
+
+        <!-- ======================
+    DEADLINE TERDEKAT
+======================= -->
+
+        <div class="container-fluid px-4 mt-5">
+
+            <div class="card card-custom">
+
+                <div class="card-header bg-white">
+
+                    <h5 class="mb-0">
+
+                        <i class="fa-solid fa-calendar-days text-primary"></i>
+
+                        Deadline Terdekat
+
+                    </h5>
+
+                </div>
+
+                <div class="card-body">
+
+                    <div id="deadlineList">
+
+                        <div class="text-center text-muted p-4">
+
+                            Belum ada tugas.
+
+                        </div>
+
+                    </div>
+
+                </div>
+
+            </div>
+
+        </div>
+
+        <!-- ======================
+        FOOTER
+======================= -->
+
+        <footer class="text-center mt-5 mb-4 text-muted">
+
+            © 2026 Student Task Manager | Dibuat oleh Novan Koten.
+
+        </footer>
+
+    </div>
+
+    <!-- Bootstrap -->
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+
+    <!-- SweetAlert -->
+
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+    <script>
+
+        /* ==========================================
+           CEK SESSION LOGIN
+        ========================================== */
+
+        const currentUser = JSON.parse(localStorage.getItem("currentUser"));
+
+        if (!currentUser) {
+
+            Swal.fire({
+                icon: "warning",
+                title: "Silakan Login",
+                text: "Anda harus login terlebih dahulu."
+            }).then(() => {
+
+                window.location.href = "index.html";
+
+            });
+
+        }
+
+        /* ==========================================
+           TAMPILKAN NAMA USER
+        ========================================== */
+
+        document.getElementById("namaUser").innerHTML =
+            currentUser.nama;
+
+
+        /* ==========================================
+           SALAM OTOMATIS
+        ========================================== */
+
+        const jam = new Date().getHours();
+
+        let salam = "";
+
+        if (jam >= 5 && jam < 11) {
+
+            salam = "🌞 Selamat Pagi";
+
+        }
+        else if (jam >= 11 && jam < 15) {
+
+            salam = "☀️ Selamat Siang";
+
+        }
+        else if (jam >= 15 && jam < 18) {
+
+            salam = "🌇 Selamat Sore";
+
+        }
+        else {
+
+            salam = "🌙 Selamat Malam";
+
+        }
+
+        document.getElementById("salam").innerHTML = salam;
+
+
+        /* ==========================================
+           AMBIL DATA TUGAS USER
+        ========================================== */
+
+        let semuaTugas =
+            JSON.parse(localStorage.getItem("tasks")) || [];
+
+        let tugasUser =
+            semuaTugas.filter(task =>
+                task.username === currentUser.username);
+
+
+        /* ==========================================
+           HITUNG STATISTIK
+        ========================================== */
+
+        let total = tugasUser.length;
+
+        let selesai = 0;
+
+        let belum = 0;
+
+        let terlambat = 0;
+
+        const hariIni = new Date();
+
+        tugasUser.forEach(task => {
+
+            if (task.status === "Selesai") {
+
+                selesai++;
+
+            } else {
+
+                const deadline = new Date(task.deadline);
+
+                if (deadline < hariIni) {
+
+                    terlambat++;
+
+                } else {
+
+                    belum++;
+
+                }
+
+            }
+
+        });
+
+        document.getElementById("totalTask").innerHTML = total;
+
+        document.getElementById("doneTask").innerHTML = selesai;
+
+        document.getElementById("pendingTask").innerHTML = belum;
+
+        document.getElementById("lateTask").innerHTML = terlambat;
+
+
+        /* ==========================================
+           DEADLINE TERDEKAT
+        ========================================== */
+
+        const deadlineList =
+            document.getElementById("deadlineList");
+
+        deadlineList.innerHTML = "";
+
+        const dataDeadline =
+            tugasUser.sort((a, b) =>
+                new Date(a.deadline) - new Date(b.deadline));
+
+        if (dataDeadline.length === 0) {
+
+            deadlineList.innerHTML = `
+
+        <div class="text-center text-muted">
+
+            Belum ada tugas.
+
+        </div>
+
+    `;
+
+        } else {
+
+            dataDeadline.slice(0, 5).forEach(task => {
+
+                let warna = "success";
+
+                if (task.status === "Selesai") {
+
+                    warna = "primary";
+
+                } else {
+
+                    if (new Date(task.deadline) < hariIni) {
+
+                        warna = "danger";
+
+                    } else {
+
+                        warna = "warning";
+
+                    }
+
+                }
+
+                deadlineList.innerHTML += `
+
+        <div class="card mb-3 border-0 shadow-sm">
+
+            <div class="card-body d-flex
+            justify-content-between
+            align-items-center">
+
+                <div>
+
+                    <h6 class="mb-1">
+
+                        ${task.judul}
+
+                    </h6>
+
+                    <small>
+
+                        ${task.matkul}
+
+                    </small>
+
+                </div>
+
+                <div class="text-end">
+
+                    <span class="badge bg-${warna}">
+
+                        ${task.deadline}
+
+                    </span>
+
+                </div>
+
+            </div>
+
+        </div>
+
+        `;
+
+            });
+
+        }
+
+
+        /* ==========================================
+           LOGOUT
+        ========================================== */
+
+        document.getElementById("logoutBtn")
+
+            .addEventListener("click", function (e) {
+
+                e.preventDefault();
+
+                Swal.fire({
+
+                    title: "Logout ?",
+
+                    text: "Yakin ingin keluar?",
+
+                    icon: "question",
+
+                    showCancelButton: true,
+
+                    confirmButtonText: "Logout",
+
+                    cancelButtonText: "Batal",
+
+                    confirmButtonColor: "#dc3545"
+
+                })
+
+                    .then((result) => {
+
+                        if (result.isConfirmed) {
+
+                            localStorage.removeItem("currentUser");
+
+                            Swal.fire({
+
+                                icon: "success",
+
+                                title: "Logout Berhasil",
+
+                                timer: 1200,
+
+                                showConfirmButton: false
+
+                            }).then(() => {
+
+                                window.location.href = "index.html";
+
+                            });
+
+                        }
+
+                    });
+
+            });
+
+    </script>
+    <script>
+
+        /* ==========================================
+           ANIMASI CARD
+        ========================================== */
+
+        const cards = document.querySelectorAll(".card-custom");
+
+        cards.forEach((card, index) => {
+
+            card.style.opacity = "0";
+
+            card.style.transform = "translateY(30px)";
+
+            setTimeout(() => {
+
+                card.style.transition = "0.6s ease";
+
+                card.style.opacity = "1";
+
+                card.style.transform = "translateY(0)";
+
+            }, index * 150);
+
+        });
+
+        /* ==========================================
+           ANIMASI HEADER
+        ========================================== */
+
+        const header = document.querySelector(".dashboard-header");
+
+        header.style.opacity = "0";
+        header.style.transform = "translateY(-20px)";
+
+        setTimeout(() => {
+
+            header.style.transition = ".8s";
+
+            header.style.opacity = "1";
+
+            header.style.transform = "translateY(0)";
+
+        }, 200);
+
+
+        /* ==========================================
+           JAM REALTIME
+        ========================================== */
+
+        const jamElement = document.createElement("small");
+
+        jamElement.className = "text-muted";
+
+        document.querySelector(".dashboard-header")
+            .appendChild(jamElement);
+
+        function updateJam() {
+
+            const sekarang = new Date();
+
+            const waktu = sekarang.toLocaleTimeString("id-ID");
+
+            const tanggal = sekarang.toLocaleDateString("id-ID", {
+
+                weekday: "long",
+
+                year: "numeric",
+
+                month: "long",
+
+                day: "numeric"
+
+            });
+
+            jamElement.innerHTML =
+                "<br>" +
+                tanggal +
+                " | " +
+                waktu;
+
+        }
+
+        updateJam();
+
+        setInterval(updateJam, 1000);
+
+
+        /* ==========================================
+           LOADING EFFECT
+        ========================================== */
+
+        window.addEventListener("load", () => {
+
+            document.body.style.opacity = "0";
+
+            setTimeout(() => {
+
+                document.body.style.transition = ".6s";
+
+                document.body.style.opacity = "1";
+
+            }, 100);
+
+        });
+
+    </script>
+
+</body>
+
+</html>
